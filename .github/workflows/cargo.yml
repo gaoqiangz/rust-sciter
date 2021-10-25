@@ -100,6 +100,7 @@ jobs:
       shell: bash
       continue-on-error: true
       run: |
+        export PATH="$PATH:$SCITER_DEPS"
         cargo build -p sciter-serde
         cargo test -p sciter-serde
 
