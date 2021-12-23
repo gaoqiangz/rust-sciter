@@ -67,7 +67,7 @@ fn add_msvc_dirs() {
 					.parent()
 					.and_then(|p| p.parent())
 					.unwrap()
-					.join("atlmfc/lib")
+					.join(r"atlmfc\lib")
 					.join(lib_subdir(&target).unwrap());
 			}
 			let sub = Path::new(r"atlmfc\lib");
