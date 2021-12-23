@@ -221,7 +221,9 @@ mod ext {
 mod ext {
 	use capi::scapi::{ISciterAPI};
 
-	extern "C" { pub fn SciterAPI() -> *const ISciterAPI;	}
+	extern "stdcall" {
+		pub fn SciterAPI() -> *const ISciterAPI;
+	}
 }
 
 #[cfg(all(feature = "dynamic", unix))]
