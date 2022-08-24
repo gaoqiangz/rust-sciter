@@ -92,7 +92,7 @@ It looks similar to this:
 
 ### Interoperability
 
-In respect of [tiscript](https://www.codeproject.com/Articles/33662/TIScript-language-a-gentle-extension-of-JavaScript) functions calling:
+In respect of [tiscript](https://www.codeproject.com/Articles/33662/TIScript-language-a-gentle-extension-of-JavaScript) or JavaScript functions calling:
 ```rust
 use sciter::{Element, Value};
 
@@ -117,13 +117,19 @@ impl sciter::EventHandler for Handler {
 }
 ```
 
-And we can access this function from script:
+And we can access this function from TIScript:
 ```js
-// `view` represents window where script is running.
+// `view` represents the window where this script is running.
 // `stdout` stream is a standard output stream (shell or debugger console, for example)
 
 stdout.printf("2 + 3 = %d\n", view.calc_sum(2, 3));
 ```
+
+or from JavaScript:
+```js
+// `Window.this` represents the window where this script is running.
+console.log("2 + 3", Window.this.xcall("calc_sum", 2, 3));
+````
 
 _Check [rust-sciter/examples](https://github.com/sciter-sdk/rust-sciter/tree/master/examples) folder for more complex usage_.
 
