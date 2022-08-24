@@ -31,7 +31,8 @@ use capi::sctypes::*;
 
 use platform::{BaseWindow, OsWindow};
 use host::{Host, HostHandler};
-use dom::event::{EventHandler};
+use dom::{self, event::{EventHandler}};
+use crate::Value;
 
 use std::rc::Rc;
 
@@ -342,30 +343,37 @@ impl Window {
 	}
 
 
-	/// Set a window variable by its path.
+	/// Set a global variable by its path to a single window.
 	///
-	/// See the global [`sciter::set_variable`](../fn.set_variable.html).
-	pub fn set_variable(&self, path: &str, value: crate::Value) -> std::result::Result<(), ()> {
-		let ws = s2w!(path);
+	/// This variable will be accessible in the _current_ window via `globalThis[path]` or just `path`.
+	///
+	/// Note that the document doesn't have to be loaded yet at this point.
+	///
+	/// See also [`sciter::set_variable`](../fn.set_variable.html) to assign a global to all windows.
+	pub fn set_variable(&self, path: &str, value: Value) -> dom::Result<()> {
+		let ws = s2u!(path);
 		let ok = (_API.SciterSetVariable)(self.get_hwnd(), ws.as_ptr(), value.as_cptr());
-		if ok != 0 {
+		if ok == dom::SCDOM_RESULT::OK {
 			Ok(())
 		} else {
-			Err(())
+			Err(ok)
 		}
 	}
 
-	/// Get a window variable by its path.
+	/// Get a global variable by its path.
 	///
-	/// See the global [`sciter::get_variable`](../fn.get_variable.html).
-	pub fn get_variable(&self, path: &str) -> std::result::Result<crate::Value, ()> {
-		let ws = s2w!(path);
-		let mut value = crate::Value::new();
+	/// It can be a variable previously assigned by [`sciter::set_variable`](../fn.set_variable.html)
+	/// or [`Window::set_variable`](struct.Window.html#method.set_variable),
+	/// or a [Sciter.JS variable](https://github.com/c-smile/sciter-js-sdk/blob/main/docs/md/README.md#global-properties),
+	/// like `document`, `location`, `console`, etc.
+	pub fn get_variable(&self, path: &str) -> dom::Result<Value> {
+		let ws = s2u!(path);
+		let mut value = Value::new();
 		let ok = (_API.SciterGetVariable)(self.get_hwnd(), ws.as_ptr(), value.as_mut_ptr());
-		if ok != 0 {
+		if ok == dom::SCDOM_RESULT::OK {
 			Ok(value)
 		} else {
-			Err(())
+			Err(ok)
 		}
 	}
 
