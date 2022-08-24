@@ -33,7 +33,6 @@ fn main() {
 		if cfg!(target_feature = "crt-static") {
 			cfg.static_crt(true);
 		}
-		cfg.static_flag(true);
 		cfg.compile("sciter-rs");
 	} else {
 		println!("cargo:warning=Set SCITER_STATIC_LIBRARY to link static library");
