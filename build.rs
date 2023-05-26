@@ -26,7 +26,7 @@ fn main() {
 		println!("cargo:rustc-link-lib={}", "windowscodecs");
 		println!("cargo:rustc-link-lib={}", "Wininet");
 		println!("cargo:rustc-link-lib={}", "gdi32");
-		println!("cargo:rustc-link-lib={}", "Winspool");
+		println!("cargo:rustc-link-lib=static={}", "Winspool");
 
 		let mut cfg = cc::Build::new();
 		cfg.file("ffi/binding.c");
