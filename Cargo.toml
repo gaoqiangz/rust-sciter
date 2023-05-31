@@ -1,12 +1,12 @@
 [package]
 name = "sciter-rs"
-version = "0.5.58"
-description = "Rust bindings for Sciter - Embeddable HTML/CSS/script engine (cross-platform desktop GUI toolkit). Also capable with DirectX / OpenGL."
+version = "0.5.58-rc.1"
+description = "[FORK] Rust bindings for Sciter - Embeddable HTML/CSS/script engine (cross-platform desktop GUI toolkit). Also capable with DirectX / OpenGL."
 keywords = ["gui", "gtk", "cocoa", "opengl", "skia"]
 categories = ["gui", "web-programming", "rendering::graphics-api", "api-bindings"]
 
 authors = ["pravic <ehysta@gmail.com>"]
-repository = "https://github.com/sciter-sdk/rust-sciter"
+repository = "https://github.com/gaoqiangz/rust-sciter"
 documentation = "https://docs.rs/sciter-rs"
 readme = "README.md"
 license = "MIT"
